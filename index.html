@@ -1,0 +1,1007 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPOILER-TECH | WhatsApp Pairing Portal</title>
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            space: {
+              950: '#0b0d13',
+              900: '#10141f',
+              850: '#161b29',
+              800: '#1c2233',
+            },
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Full-Viewport SPOILERX BOT Background Image with Dark Translucent Overlay */
+    body {
+      background-color: #080710;
+      background-image:
+        linear-gradient(
+          180deg,
+          rgba(8, 7, 16, 0.54) 0%,
+          rgba(12, 8, 24, 0.58) 50%,
+          rgba(8, 7, 16, 0.72) 100%
+        ),
+        var(--bg-image-url, url('1177102.png'));
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle Neon Purple Vignette & Ambient Glow */
+    .cyber-overlay {
+      background-image:
+        radial-gradient(circle at 50% 25%, rgba(168, 85, 247, 0.14) 0%, transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.12) 0%, transparent 50%);
+    }
+
+    /* Main Glassmorphic Card tuned for SPOILERX BOT Neon Purple Backdrop */
+    .glass-portal-card {
+      background: linear-gradient(
+        145deg,
+        rgba(18, 16, 32, 0.72) 0%,
+        rgba(24, 18, 44, 0.68) 50%,
+        rgba(14, 13, 26, 0.78) 100%
+      );
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(192, 132, 252, 0.22);
+      box-shadow:
+        0 24px 48px -12px rgba(0, 0, 0, 0.75),
+        0 0 28px rgba(168, 85, 247, 0.14);
+    }
+
+    /* Primary Purple-to-Cyan Gradient Button */
+    .btn-cypher-gradient {
+      background: linear-gradient(90deg, #a855f7 0%, #818cf8 48%, #2dd4bf 100%);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-cypher-gradient:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.45);
+      transform: translateY(-1px);
+    }
+    .btn-cypher-gradient:active {
+      transform: scale(0.985);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080710;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3b2659;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="text-slate-100 font-sans antialiased selection:bg-purple-500/30 selection:text-purple-200 cyber-overlay pb-28">
+
+  <!-- Toast Notification Container (Replaces alert) -->
+  <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-11/12 max-w-sm pointer-events-none"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-30 bg-[#0b0917]/80 backdrop-blur-md border-b border-purple-400/15">
+    <div class="max-w-[440px] mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
+      <!-- Brand Identity -->
+      <div class="flex items-center gap-3 min-w-0">
+        <!-- Custom Stylized SPOILER-TECH Bot Avatar Icon -->
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-purple-500 via-fuchsia-500 to-cyan-400 p-[1px] shadow-[0_0_15px_rgba(168,85,247,0.4)] shrink-0">
+          <div class="w-full h-full rounded-2xl bg-gradient-to-b from-[#23173a]/90 to-[#141126]/95 flex flex-col items-center justify-center relative overflow-hidden">
+            <div class="w-3.5 h-3.5 rounded-full bg-purple-300 shadow-[0_0_10px_#d8b4fe] mb-1"></div>
+            <div class="w-6 h-2 rounded-full bg-white/95 shadow-sm"></div>
+          </div>
+        </div>
+
+        <div class="truncate">
+          <h1 class="text-base sm:text-lg font-extrabold tracking-wide text-white leading-tight">
+            SPOILER-TECH
+          </h1>
+          <p class="text-xs sm:text-sm text-purple-200/75 truncate">
+            WhatsApp Pairing Po...
+          </p>
+        </div>
+      </div>
+
+      <!-- Server Online Status Badge -->
+      <div class="shrink-0 flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-[#131024]/90 border border-purple-400/20 shadow-inner">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+        </span>
+        <div class="font-mono text-[10px] sm:text-[11px] leading-[1.15] tracking-wider text-slate-200 uppercase">
+          <div>SERVER</div>
+          <div class="text-slate-300">ONLINE</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-[440px] mx-auto px-4 pt-5">
+    <!-- Primary Glassmorphic Card -->
+    <section class="glass-portal-card rounded-[22px] p-5 sm:p-6 transition-all duration-300">
+      <!-- Card Header -->
+      <div class="mb-4 flex items-start justify-between gap-2">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2">
+            Pair Device
+          </h2>
+          <p class="text-[14px] sm:text-[15px] leading-relaxed text-slate-200/90">
+            Enter your WhatsApp number (include country code). We'll generate a pairing code and capture your session.
+          </p>
+        </div>
+        <!-- Collapsible Backend & Background Settings Toggle -->
+        <button
+          type="button"
+          id="toggle-api-config-btn"
+          title="Configure Baileys Backend & Background"
+          class="shrink-0 p-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-400/25 text-purple-200 hover:text-white transition-colors cursor-pointer"
+        >
+          <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Collapsible Baileys Backend & Background Image Drawer -->
+      <div id="api-config-drawer" class="hidden mb-4 p-3.5 rounded-2xl bg-[#0e0c1d]/95 border border-purple-400/30 space-y-3">
+        <!-- Backend API Section -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono uppercase tracking-wider text-purple-300 font-semibold flex items-center gap-1.5">
+              <i data-lucide="server" class="w-3.5 h-3.5"></i>
+              Baileys Backend Endpoint
+            </span>
+            <span id="api-mode-badge" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30">
+              DEMO SIMULATOR
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            Paste your deployed server URL (expects <code class="text-slate-200">/code?number=</code> &amp; <code class="text-slate-200">/qr</code>) or leave empty to test locally.
+          </p>
+          <input
+            type="url"
+            id="backend-url-input"
+            placeholder="https://spoiler-tech-pair.onrender.com"
+            class="w-full rounded-xl bg-[#080710] border border-purple-400/20 px-3 py-2 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-purple-400/70"
+          />
+        </div>
+
+        <!-- Background Image URL Fallback / Customizer -->
+        <div class="space-y-2 pt-2 border-t border-white/10">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono uppercase tracking-wider text-cyan-300 font-semibold flex items-center gap-1.5">
+              <i data-lucide="image" class="w-3.5 h-3.5"></i>
+              Background Image Path / URL
+            </span>
+            <button
+              type="button"
+              id="reset-bg-btn"
+              class="text-[10px] font-mono text-slate-400 hover:text-white underline cursor-pointer"
+            >
+              Default (1177102.png)
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            Defaults to <code class="text-purple-200">1177102.png</code> in your site folder. Or paste a hosted URL (e.g., <code class="text-slate-200">bg.png</code> or GitHub raw URL).
+          </p>
+          <div class="flex gap-2">
+            <input
+              type="text"
+              id="bg-url-input"
+              placeholder="1177102.png or https://..."
+              class="w-full rounded-xl bg-[#080710] border border-purple-400/20 px-3 py-2 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-purple-400/70"
+            />
+            <button
+              type="button"
+              id="save-backend-btn"
+              class="shrink-0 px-3.5 py-2 rounded-xl bg-purple-500/25 hover:bg-purple-500/35 border border-purple-400/40 text-purple-100 text-xs font-semibold transition-colors cursor-pointer"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links Section -->
+      <div class="space-y-3 mb-5">
+        <div>
+          <h3 class="text-[15px] font-bold text-white leading-snug">
+            QR Scan
+          </h3>
+          <button
+            type="button"
+            id="toggle-mode-btn"
+            class="text-sm font-medium text-[#22c55e] hover:text-[#4ade80] underline underline-offset-4 decoration-[#22c55e]/80 transition-colors text-left cursor-pointer"
+          >
+            Click here to scan QR instead
+          </button>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="text-[15px] font-bold text-white leading-snug">
+              SPOILER-TECH Repository
+            </h3>
+            <button
+              type="button"
+              id="copy-repo-btn"
+              title="Copy GitHub Repository URL"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-500/15 hover:bg-purple-500/25 border border-purple-400/25 text-[11px] font-mono text-purple-100 hover:text-white transition-colors cursor-pointer"
+            >
+              <i data-lucide="github" class="w-3 h-3 text-purple-300"></i>
+              <span>SPOILER-254/SPOILER-TECH</span>
+              <i data-lucide="copy" class="w-3 h-3 text-purple-300/70"></i>
+            </button>
+          </div>
+          <a
+            href="https://github.com/SPOILER-254/SPOILER-TECH"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block mt-0.5 text-sm font-medium text-[#22c55e] hover:text-[#4ade80] underline underline-offset-4 decoration-[#22c55e]/80 transition-colors"
+          >
+            Click here to visit SPOILER-TECH Repo
+          </a>
+        </div>
+      </div>
+
+      <!-- MODE A: Phone Number Pairing View -->
+      <div id="phone-mode-section" class="space-y-4">
+        <div>
+          <label for="whatsapp-number" class="block text-sm font-bold text-white mb-2">
+            WhatsApp Number
+          </label>
+          <div class="relative flex items-center rounded-2xl bg-[#100e1f]/85 border border-purple-400/20 focus-within:border-purple-400/70 focus-within:ring-2 focus-within:ring-purple-500/25 transition-all px-4 py-3.5">
+            <span class="text-purple-300/80 font-mono text-base select-none mr-2.5">+</span>
+            <input
+              type="tel"
+              id="whatsapp-number"
+              inputmode="numeric"
+              autocomplete="tel"
+              placeholder="2547xxxxxxxx"
+              maxlength="15"
+              class="w-full bg-transparent text-white placeholder-slate-400/70 font-mono text-base focus:outline-none tracking-wide"
+            />
+            <button
+              type="button"
+              id="clear-input-btn"
+              title="Clear number"
+              class="hidden text-slate-400 hover:text-white p-1 rounded-lg transition-colors"
+            >
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <p id="input-error" class="hidden text-xs text-rose-400 mt-1.5 font-medium flex items-center gap-1">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+            <span>Please enter a valid number with country code (7–15 digits).</span>
+          </p>
+        </div>
+
+        <!-- Primary Generate Pair Code Button -->
+        <button
+          type="button"
+          id="main-generate-btn"
+          class="w-full btn-cypher-gradient rounded-2xl py-3.5 px-5 flex items-center justify-center gap-3 text-[#0c0a18] font-bold text-[15px] shadow-lg cursor-pointer"
+        >
+          <span class="w-8 h-8 rounded-xl bg-white/30 flex items-center justify-center backdrop-blur-sm">
+            <i data-lucide="link-2" class="w-4 h-4 stroke-[2.5]"></i>
+          </span>
+          <span id="main-generate-label">Generate Pair Code</span>
+        </button>
+
+        <!-- Secondary Reset Button -->
+        <button
+          type="button"
+          id="reset-btn"
+          class="w-full rounded-2xl py-3 px-5 bg-[#151226]/85 hover:bg-[#1f1a38] active:scale-[0.99] border border-purple-400/20 text-slate-200 font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+        >
+          <i data-lucide="refresh-cw" class="w-4 h-4 text-purple-300"></i>
+          <span>Reset</span>
+        </button>
+      </div>
+
+      <!-- MODE B: QR Code Scan View (Hidden by default) -->
+      <div id="qr-mode-section" class="hidden space-y-4">
+        <div class="rounded-2xl bg-[#100e1f]/90 border border-purple-400/20 p-5 flex flex-col items-center text-center">
+          <div class="flex items-center justify-between w-full mb-3 text-xs">
+            <span class="font-mono text-purple-300 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+              LIVE QR SESSION
+            </span>
+            <span id="qr-timer-badge" class="font-mono text-slate-300 bg-purple-500/15 px-2.5 py-1 rounded-full border border-purple-400/20">
+              Expires in 45s
+            </span>
+          </div>
+
+          <!-- Simulated Crisp SVG QR Matrix -->
+          <div class="relative p-3.5 bg-white rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)] mb-3">
+            <div id="qr-svg-holder" class="w-44 h-44 sm:w-48 sm:h-48 flex items-center justify-center"></div>
+            <!-- Center Brand Badge -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div class="w-10 h-10 rounded-xl bg-[#120d24] border-2 border-white flex items-center justify-center shadow-md">
+                <span class="text-xs font-extrabold text-purple-300 font-mono">SX</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-300 max-w-xs leading-relaxed">
+            Open WhatsApp &rarr; <span class="text-white font-medium">Linked Devices</span> &rarr; <span class="text-white font-medium">Link a Device</span> and point your camera at this QR code.
+          </p>
+
+          <button
+            type="button"
+            id="refresh-qr-btn"
+            class="mt-4 px-4 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-400/30 text-xs font-semibold text-purple-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+            Refresh QR Code
+          </button>
+        </div>
+      </div>
+
+      <!-- Generated Pair Code Display Area (Appears smoothly on generation) -->
+      <div id="pair-code-result" class="hidden mt-5 rounded-2xl bg-[#100d20]/90 border border-purple-400/35 p-4 sm:p-5 shadow-[0_0_30px_rgba(168,85,247,0.2)] transition-all">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">
+              Pairing Code Ready
+            </span>
+          </div>
+          <span id="code-countdown" class="font-mono text-xs px-2.5 py-1 rounded-full bg-purple-500/15 text-purple-200 border border-purple-400/25">
+            01:00
+          </span>
+        </div>
+
+        <!-- 8-Character Code Boxes -->
+        <div class="flex items-center justify-between gap-2 my-3">
+          <div id="code-boxes" class="grid grid-cols-9 gap-1 sm:gap-1.5 w-full items-center">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- 60-Second Expiration Progress Bar -->
+        <div class="w-full h-1.5 rounded-full bg-white/[0.08] overflow-hidden mb-3">
+          <div id="code-progress-bar" class="h-full w-full bg-gradient-to-r from-[#a855f7] via-[#818cf8] to-[#2dd4bf] transition-all duration-1000 ease-linear"></div>
+        </div>
+
+        <!-- Copy Action & Status Log -->
+        <div class="flex items-center justify-between gap-3 pt-2 border-t border-white/[0.08]">
+          <div class="text-xs font-mono text-slate-300 truncate" id="session-log-text">
+            &gt; Waiting for WhatsApp confirmation...
+          </div>
+          <button
+            type="button"
+            id="inline-copy-btn"
+            class="shrink-0 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/35 text-purple-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Copy Code</span>
+          </button>
+        </div>
+
+        <!-- Simulated SPOILER-TECH Session ID Preview -->
+        <div class="mt-3 p-3 rounded-xl bg-[#090714]/90 border border-purple-400/20 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400">
+              Session ID Preview (Base64 Creds)
+            </div>
+            <div id="session-id-preview" class="text-xs font-mono text-purple-300 truncate mt-0.5">
+              SPOILER-TECH~pending_handshake...
+            </div>
+          </div>
+          <button
+            type="button"
+            id="copy-session-btn"
+            class="shrink-0 px-2.5 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-purple-400/20 text-[11px] font-semibold text-slate-200 flex items-center gap-1 transition-colors cursor-pointer"
+          >
+            <i data-lucide="key-round" class="w-3 h-3 text-purple-300"></i>
+            <span>Copy ID</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 'How to Pair' Nested Guide Card (Steps 1 to 4) -->
+      <div class="mt-6 rounded-[22px] bg-[#110e20]/80 border border-purple-400/15 p-4 sm:p-5">
+        <div class="flex items-center justify-between gap-2 mb-4">
+          <div class="flex items-center gap-2">
+            <!-- WhatsApp-style Green Phone Badge -->
+            <span class="w-6 h-6 rounded-full bg-emerald-500/15 border border-emerald-400/40 flex items-center justify-center text-emerald-400">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+            </span>
+            <h3 class="text-[15px] font-bold text-white">How to Pair</h3>
+          </div>
+          <span class="text-xs text-slate-300/80">Do this on your WhatsApp</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Step 1 -->
+          <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#1a1530]/85 border border-purple-400/15">
+            <div class="w-8 h-8 rounded-full bg-purple-500/25 border border-purple-400/35 text-purple-200 font-semibold text-sm flex items-center justify-center shrink-0">
+              1
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white leading-snug">Open WhatsApp</h4>
+              <p class="text-xs text-slate-300/80 mt-0.5">Go to Settings</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#1a1530]/85 border border-purple-400/15">
+            <div class="w-8 h-8 rounded-full bg-purple-500/25 border border-purple-400/35 text-purple-200 font-semibold text-sm flex items-center justify-center shrink-0">
+              2
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white leading-snug">Linked Devices</h4>
+              <p class="text-xs text-slate-300/80 mt-0.5">Tap “Link a device”</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#1a1530]/85 border border-purple-400/15">
+            <div class="w-8 h-8 rounded-full bg-purple-500/25 border border-purple-400/35 text-purple-200 font-semibold text-sm flex items-center justify-center shrink-0">
+              3
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white leading-snug">Link with phone number</h4>
+              <p class="text-xs text-slate-300/80 mt-0.5">Enter the 8-digit code shown above</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#1a1530]/85 border border-purple-400/15">
+            <div class="w-8 h-8 rounded-full bg-purple-500/25 border border-purple-400/35 text-purple-200 font-semibold text-sm flex items-center justify-center shrink-0">
+              4
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white leading-snug">Receive Session ID</h4>
+              <p class="text-xs text-slate-300/80 mt-0.5">Copy your SPOILER-TECH session &amp; deploy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtle Backend-Ready Footer -->
+      <p class="mt-4 text-center text-[11px] text-slate-300/75 font-mono">
+        Powered by <a href="https://github.com/SPOILER-254/SPOILER-TECH" target="_blank" rel="noopener noreferrer" class="text-purple-300 hover:text-white underline decoration-purple-400/40">SPOILER-TECH</a> &bull; SPOILERX BOT Edition
+      </p>
+    </section>
+  </main>
+
+  <!-- Fixed/Sticky Bottom Action Bar -->
+  <div class="fixed bottom-0 inset-x-0 z-30 bg-[#0b0917]/88 backdrop-blur-lg border-t border-purple-400/15 px-4 py-3">
+    <div class="max-w-[440px] mx-auto grid grid-cols-2 gap-3">
+      <!-- Left Generate Button -->
+      <button
+        type="button"
+        id="bottom-generate-btn"
+        class="btn-cypher-gradient rounded-2xl py-3 px-4 flex items-center justify-center gap-2 text-[#0c0a18] font-bold text-sm shadow-md cursor-pointer"
+      >
+        <i data-lucide="link-2" class="w-4 h-4 stroke-[2.5]"></i>
+        <span>Generate</span>
+      </button>
+
+      <!-- Right Copy Button -->
+      <button
+        type="button"
+        id="bottom-copy-btn"
+        class="rounded-2xl py-3 px-4 bg-[#161329] hover:bg-[#201b3b] active:scale-[0.98] border border-purple-400/20 text-slate-200 font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+      >
+        <i data-lucide="copy" class="w-4 h-4 text-purple-300"></i>
+        <span>Copy</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Application Logic -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    const REPO_URL = 'https://github.com/SPOILER-254/SPOILER-TECH';
+    const DEFAULT_BG_IMAGE = '1177102.png';
+
+    // State Management
+    const state = {
+      mode: 'phone', // 'phone' | 'qr'
+      currentCode: '',
+      currentSessionId: '',
+      backendUrl: localStorage.getItem('spoiler_tech_backend_url') || '',
+      bgImageUrl: localStorage.getItem('spoiler_tech_bg_url') || DEFAULT_BG_IMAGE,
+      codeTimerInterval: null,
+      qrTimerInterval: null,
+      codeSecondsLeft: 60,
+      qrSecondsLeft: 45,
+      isGenerating: false,
+    };
+
+    // DOM Elements
+    const phoneInput = document.getElementById('whatsapp-number');
+    const clearInputBtn = document.getElementById('clear-input-btn');
+    const inputError = document.getElementById('input-error');
+    const toggleModeBtn = document.getElementById('toggle-mode-btn');
+    const copyRepoBtn = document.getElementById('copy-repo-btn');
+    const toggleApiConfigBtn = document.getElementById('toggle-api-config-btn');
+    const apiConfigDrawer = document.getElementById('api-config-drawer');
+    const backendUrlInput = document.getElementById('backend-url-input');
+    const bgUrlInput = document.getElementById('bg-url-input');
+    const resetBgBtn = document.getElementById('reset-bg-btn');
+    const saveBackendBtn = document.getElementById('save-backend-btn');
+    const apiModeBadge = document.getElementById('api-mode-badge');
+    const phoneModeSection = document.getElementById('phone-mode-section');
+    const qrModeSection = document.getElementById('qr-mode-section');
+    const mainGenerateBtn = document.getElementById('main-generate-btn');
+    const mainGenerateLabel = document.getElementById('main-generate-label');
+    const bottomGenerateBtn = document.getElementById('bottom-generate-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const inlineCopyBtn = document.getElementById('inline-copy-btn');
+    const bottomCopyBtn = document.getElementById('bottom-copy-btn');
+    const copySessionBtn = document.getElementById('copy-session-btn');
+    const pairCodeResult = document.getElementById('pair-code-result');
+    const codeBoxes = document.getElementById('code-boxes');
+    const codeCountdown = document.getElementById('code-countdown');
+    const codeProgressBar = document.getElementById('code-progress-bar');
+    const sessionLogText = document.getElementById('session-log-text');
+    const sessionIdPreview = document.getElementById('session-id-preview');
+    const qrSvgHolder = document.getElementById('qr-svg-holder');
+    const qrTimerBadge = document.getElementById('qr-timer-badge');
+    const refreshQrBtn = document.getElementById('refresh-qr-btn');
+
+    /**
+     * Apply custom or default background image cleanly via CSS custom property
+     */
+    function applyBackgroundImage(imagePath) {
+      const sanitized = (imagePath || DEFAULT_BG_IMAGE).trim().replace(/"/g, '%22');
+      document.documentElement.style.setProperty('--bg-image-url', `url("${sanitized}")`);
+    }
+
+    // Initialize saved settings on load
+    applyBackgroundImage(state.bgImageUrl);
+    bgUrlInput.value = state.bgImageUrl === DEFAULT_BG_IMAGE ? '' : state.bgImageUrl;
+
+    if (state.backendUrl) {
+      backendUrlInput.value = state.backendUrl;
+      apiModeBadge.textContent = 'LIVE API';
+      apiModeBadge.className =
+        'text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-400/15 text-emerald-300 border border-emerald-400/30';
+    }
+
+    /**
+     * Helper to copy any text string reliably inside iFrames
+     */
+    function copyTextToClipboard(text, successMessage) {
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = text;
+      tempTextArea.style.position = 'fixed';
+      tempTextArea.style.opacity = '0';
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+
+      try {
+        document.execCommand('copy');
+        showToast(successMessage, 'success');
+      } catch (err) {
+        showToast('Unable to copy automatically. Please copy manually.', 'error');
+      } finally {
+        document.body.removeChild(tempTextArea);
+      }
+    }
+
+    /**
+     * Display a custom sleek toast message (never uses alert)
+     */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+
+      const styles = {
+        success: 'bg-[#132624]/95 border-emerald-400/40 text-emerald-200',
+        error: 'bg-[#29151b]/95 border-rose-400/40 text-rose-200',
+        info: 'bg-[#19202e]/95 border-teal-400/35 text-slate-100',
+      };
+
+      const icons = {
+        success: 'check-circle-2',
+        error: 'alert-triangle',
+        info: 'sparkles',
+      };
+
+      toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-2xl border backdrop-blur-md shadow-xl text-xs sm:text-sm font-medium transition-all duration-300 translate-y-[-10px] opacity-0 ${styles[type] || styles.info}`;
+      toast.innerHTML = `
+        <i data-lucide="${icons[type] || icons.info}" class="w-4 h-4 shrink-0"></i>
+        <span>${message}</span>
+      `;
+
+      container.appendChild(toast);
+      lucide.createIcons({ root: toast });
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    /**
+     * Generate realistic 8-character WhatsApp pairing code (e.g., SP25-4X9K)
+     */
+    function createRandomPairCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let part1 = '';
+      let part2 = '';
+      for (let i = 0; i < 4; i++) {
+        part1 += chars.charAt(Math.floor(Math.random() * chars.length));
+        part2 += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return `${part1}-${part2}`;
+    }
+
+    /**
+     * Generate a realistic SPOILER-TECH~ session string preview
+     */
+    function createSimulatedSessionId(number) {
+      const randomToken = btoa(`SPOILER-TECH:${number}:${Date.now()}`).replace(/=+$/, '');
+      return `SPOILER-TECH~${randomToken}`;
+    }
+
+    /**
+     * Render 8-character code inside glowing neon-purple monospace boxes
+     */
+    function renderCodeBoxes(code) {
+      codeBoxes.innerHTML = '';
+      const normalized = code.includes('-') ? code : `${code.slice(0, 4)}-${code.slice(4, 8)}`;
+      const chars = normalized.split('');
+      chars.forEach((char) => {
+        if (char === '-') {
+          const dash = document.createElement('div');
+          dash.className = 'text-center font-mono font-bold text-purple-400 text-lg select-none';
+          dash.textContent = '-';
+          codeBoxes.appendChild(dash);
+        } else {
+          const box = document.createElement('div');
+          box.className =
+            'aspect-square flex items-center justify-center rounded-xl bg-[#1a1530] border border-purple-400/40 font-mono font-bold text-base sm:text-lg text-white shadow-[0_0_12px_rgba(168,85,247,0.25)]';
+          box.textContent = char;
+          codeBoxes.appendChild(box);
+        }
+      });
+    }
+
+    /**
+     * Start 60-second pairing code countdown & simulated session logs
+     */
+    function startCodeCountdown(phoneNumber) {
+      clearInterval(state.codeTimerInterval);
+      state.codeSecondsLeft = 60;
+      codeCountdown.textContent = '01:00';
+      codeProgressBar.style.width = '100%';
+      sessionLogText.textContent = '> Linking socket initialized...';
+      sessionIdPreview.textContent = 'SPOILER-TECH~awaiting_pair...';
+      state.currentSessionId = '';
+
+      state.codeTimerInterval = setInterval(() => {
+        state.codeSecondsLeft -= 1;
+        const mins = String(Math.floor(state.codeSecondsLeft / 60)).padStart(2, '0');
+        const secs = String(state.codeSecondsLeft % 60).padStart(2, '0');
+        codeCountdown.textContent = `${mins}:${secs}`;
+        codeProgressBar.style.width = `${Math.max(0, (state.codeSecondsLeft / 60) * 100)}%`;
+
+        if (state.codeSecondsLeft === 54) {
+          sessionLogText.textContent = '> Code active. Enter on WhatsApp now.';
+        } else if (state.codeSecondsLeft === 42) {
+          sessionLogText.textContent = '> Handshake verified! Session captured.';
+          state.currentSessionId = createSimulatedSessionId(phoneNumber);
+          sessionIdPreview.textContent = state.currentSessionId;
+        }
+
+        if (state.codeSecondsLeft <= 0) {
+          clearInterval(state.codeTimerInterval);
+          codeCountdown.textContent = 'EXPIRED';
+          codeProgressBar.style.width = '0%';
+          sessionLogText.textContent = '> Code expired. Click Generate again.';
+        }
+      }, 1000);
+    }
+
+    /**
+     * Handle Generate Pair Code Flow (Supports live Baileys `/code?number=` API or Demo Mode)
+     */
+    async function handleGenerateCode() {
+      if (state.mode !== 'phone') {
+        switchMode('phone');
+      }
+
+      const rawValue = phoneInput.value.replace(/\D/g, '');
+      if (rawValue.length < 7 || rawValue.length > 15) {
+        inputError.classList.remove('hidden');
+        phoneInput.focus();
+        showToast('Enter a valid WhatsApp number with country code.', 'error');
+        return;
+      }
+
+      inputError.classList.add('hidden');
+      if (state.isGenerating) return;
+
+      state.isGenerating = true;
+      mainGenerateLabel.textContent = 'Generating Code...';
+      mainGenerateBtn.classList.add('opacity-80');
+
+      try {
+        let generatedCode = '';
+
+        if (state.backendUrl) {
+          // Live Baileys Express API integration: GET {backendUrl}/code?number=2547...
+          const cleanBase = state.backendUrl.replace(/\/+$/, '');
+          const response = await fetch(`${cleanBase}/code?number=${encodeURIComponent(rawValue)}`);
+          if (!response.ok) throw new Error(`Server responded with ${response.status}`);
+          const data = await response.json();
+          generatedCode = (data.code || data.pairCode || '').toString().trim();
+          if (!generatedCode) throw new Error('No pairing code returned by server.');
+        } else {
+          // Simulated delay for demo mode
+          await new Promise((resolve) => setTimeout(resolve, 650));
+          generatedCode = createRandomPairCode();
+        }
+
+        state.currentCode = generatedCode.includes('-')
+          ? generatedCode
+          : `${generatedCode.slice(0, 4)}-${generatedCode.slice(4, 8)}`;
+
+        renderCodeBoxes(state.currentCode);
+        pairCodeResult.classList.remove('hidden');
+        startCodeCountdown(rawValue);
+        showToast(`Pair code ${state.currentCode} ready!`, 'success');
+      } catch (err) {
+        showToast(`API Error: ${err.message}`, 'error');
+      } finally {
+        state.isGenerating = false;
+        mainGenerateLabel.textContent = 'Generate Pair Code';
+        mainGenerateBtn.classList.remove('opacity-80');
+      }
+    }
+
+    /**
+     * Copy current pairing code to clipboard
+     */
+    function copyPairCode() {
+      if (!state.currentCode) {
+        showToast('Generate a pairing code first to copy.', 'error');
+        return;
+      }
+      const cleanCode = state.currentCode.replace('-', '');
+      copyTextToClipboard(cleanCode, `Copied "${cleanCode}" to clipboard!`);
+    }
+
+    /**
+     * Generate a deterministic-looking SVG QR pattern for QR Scan Mode
+     */
+    function renderSimulatedQR() {
+      const size = 21;
+      let rects = '';
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const isTopLeft = r < 7 && c < 7;
+          const isTopRight = r < 7 && c >= size - 7;
+          const isBottomLeft = r >= size - 7 && c < 7;
+          const isCenterLogo = r >= 8 && r <= 12 && c >= 8 && c <= 12;
+
+          if (isCenterLogo) continue;
+
+          let fill = false;
+          if (isTopLeft || isTopRight || isBottomLeft) {
+            const lr = isBottomLeft ? r - (size - 7) : r;
+            const lc = isTopRight ? c - (size - 7) : c;
+            fill =
+              lr === 0 ||
+              lr === 6 ||
+              lc === 0 ||
+              lc === 6 ||
+              (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4);
+          } else {
+            fill = Math.random() > 0.48;
+          }
+
+          if (fill) {
+            rects += `<rect x="${c}" y="${r}" width="1" height="1" rx="0.2" fill="#0f172a" />`;
+          }
+        }
+      }
+
+      qrSvgHolder.innerHTML = `
+        <svg viewBox="0 0 ${size} ${size}" class="w-full h-full shape-rendering-crispEdges">
+          ${rects}
+        </svg>
+      `;
+    }
+
+    /**
+     * Start QR Countdown Timer
+     */
+    function startQrTimer() {
+      clearInterval(state.qrTimerInterval);
+      state.qrSecondsLeft = 45;
+      qrTimerBadge.textContent = `Expires in ${state.qrSecondsLeft}s`;
+
+      state.qrTimerInterval = setInterval(() => {
+        state.qrSecondsLeft -= 1;
+        if (state.qrSecondsLeft <= 0) {
+          renderSimulatedQR();
+          state.qrSecondsLeft = 45;
+        }
+        qrTimerBadge.textContent = `Expires in ${state.qrSecondsLeft}s`;
+      }, 1000);
+    }
+
+    /**
+     * Toggle between Phone Number Pairing and QR Scan Mode
+     */
+    function switchMode(targetMode) {
+      state.mode = targetMode;
+      if (state.mode === 'qr') {
+        phoneModeSection.classList.add('hidden');
+        pairCodeResult.classList.add('hidden');
+        qrModeSection.classList.remove('hidden');
+        toggleModeBtn.textContent = 'Click here to use Pair Code instead';
+        renderSimulatedQR();
+        startQrTimer();
+      } else {
+        qrModeSection.classList.add('hidden');
+        phoneModeSection.classList.remove('hidden');
+        if (state.currentCode) {
+          pairCodeResult.classList.remove('hidden');
+        }
+        toggleModeBtn.textContent = 'Click here to scan QR instead';
+        clearInterval(state.qrTimerInterval);
+      }
+    }
+
+    /**
+     * Reset all inputs and generated codes
+     */
+    function handleReset() {
+      phoneInput.value = '';
+      clearInputBtn.classList.add('hidden');
+      inputError.classList.add('hidden');
+      state.currentCode = '';
+      state.currentSessionId = '';
+      clearInterval(state.codeTimerInterval);
+      pairCodeResult.classList.add('hidden');
+      showToast('Session & input cleared.', 'info');
+    }
+
+    // Event Listeners
+    phoneInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '');
+      inputError.classList.add('hidden');
+      if (e.target.value.length > 0) {
+        clearInputBtn.classList.remove('hidden');
+      } else {
+        clearInputBtn.classList.add('hidden');
+      }
+    });
+
+    phoneInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        handleGenerateCode();
+      }
+    });
+
+    clearInputBtn.addEventListener('click', () => {
+      phoneInput.value = '';
+      clearInputBtn.classList.add('hidden');
+      phoneInput.focus();
+    });
+
+    toggleModeBtn.addEventListener('click', () => {
+      switchMode(state.mode === 'phone' ? 'qr' : 'phone');
+    });
+
+    copyRepoBtn.addEventListener('click', () => {
+      copyTextToClipboard(REPO_URL, 'Copied SPOILER-TECH GitHub URL!');
+    });
+
+    toggleApiConfigBtn.addEventListener('click', () => {
+      apiConfigDrawer.classList.toggle('hidden');
+    });
+
+    saveBackendBtn.addEventListener('click', () => {
+      const url = backendUrlInput.value.trim();
+      const customBg = bgUrlInput.value.trim();
+
+      state.backendUrl = url;
+      if (url) {
+        localStorage.setItem('spoiler_tech_backend_url', url);
+        apiModeBadge.textContent = 'LIVE API';
+        apiModeBadge.className =
+          'text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-400/15 text-emerald-300 border border-emerald-400/30';
+      } else {
+        localStorage.removeItem('spoiler_tech_backend_url');
+        apiModeBadge.textContent = 'DEMO SIMULATOR';
+        apiModeBadge.className =
+          'text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30';
+      }
+
+      if (customBg) {
+        state.bgImageUrl = customBg;
+        localStorage.setItem('spoiler_tech_bg_url', customBg);
+        applyBackgroundImage(customBg);
+      } else {
+        state.bgImageUrl = DEFAULT_BG_IMAGE;
+        localStorage.removeItem('spoiler_tech_bg_url');
+        applyBackgroundImage(DEFAULT_BG_IMAGE);
+      }
+
+      showToast('Settings & background saved!', 'success');
+    });
+
+    resetBgBtn.addEventListener('click', () => {
+      bgUrlInput.value = '';
+      state.bgImageUrl = DEFAULT_BG_IMAGE;
+      localStorage.removeItem('spoiler_tech_bg_url');
+      applyBackgroundImage(DEFAULT_BG_IMAGE);
+      showToast('Restored default 1177102.png background.', 'info');
+    });
+
+    copySessionBtn.addEventListener('click', () => {
+      const sample = state.currentSessionId || createSimulatedSessionId(phoneInput.value || '254700000000');
+      copyTextToClipboard(sample, 'Copied SPOILER-TECH Session ID!');
+    });
+
+    refreshQrBtn.addEventListener('click', () => {
+      renderSimulatedQR();
+      startQrTimer();
+      showToast('Refreshed QR session code.', 'info');
+    });
+
+    mainGenerateBtn.addEventListener('click', handleGenerateCode);
+    bottomGenerateBtn.addEventListener('click', handleGenerateCode);
+    resetBtn.addEventListener('click', handleReset);
+    inlineCopyBtn.addEventListener('click', copyPairCode);
+    bottomCopyBtn.addEventListener('click', copyPairCode);
+  </script>
+</body>
+</html>
+```
